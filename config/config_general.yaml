@@ -1,0 +1,9 @@
+# General configuration for the project
+version: v1.0
+
+# Project paths (relative to notebook location)
+paths:
+  data: ../data
+  outputs: ../outputs
+  figures: ../outputs/figures
+  models: ../outputs/models
