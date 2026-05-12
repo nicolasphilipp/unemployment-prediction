@@ -1,0 +1,57 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+### Jupyter Notebooks ###
+# Checkpoints
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+### JetBrains / DataSpell ###
+# DataSpell-specific project files
+.idea/
+.dataspell/
+workspace.xml
+tasks.xml
+shelf/
+dictionaries/
+
+### Environment Variables ###
+# Explicitly ignore local secrets
+.env
+.venv
+*.env
+.env.*
+!.env.example

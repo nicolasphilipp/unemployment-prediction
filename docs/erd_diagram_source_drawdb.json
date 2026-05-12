@@ -1,0 +1,275 @@
+{
+  "tables": [
+    {
+      "id": "ZrWtgGKXzZgn5WMIKaRTd",
+      "name": "district",
+      "x": -659,
+      "y": -121.99999999999994,
+      "locked": false,
+      "fields": [
+        {
+          "name": "district_id",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": true,
+          "unique": false,
+          "unsigned": true,
+          "notNull": true,
+          "increment": true,
+          "comment": "",
+          "id": "RLasjEPCnqX_9pXYz6tqd"
+        },
+        {
+          "id": "tybjzcODwuxnaHMKjyMqC",
+          "name": "nuts_code",
+          "type": "VARCHAR",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": 5
+        },
+        {
+          "id": "wbaIY6KlrIQc379iG2Ioi",
+          "name": "district_code",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": true,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        }
+      ],
+      "comment": "",
+      "indices": [],
+      "color": "#175e7a"
+    },
+    {
+      "id": "4uKUZPDiO0Q7I4bWYR3-g",
+      "name": "unemployment",
+      "x": 110.99999999999989,
+      "y": -241.5,
+      "locked": false,
+      "fields": [
+        {
+          "id": "WhSwqhQ4_mkZrlCnkcoE4",
+          "name": "measurement_id",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": true,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        },
+        {
+          "id": "Cu2nLE0-mUhIMO1UVNeM3",
+          "name": "gender",
+          "type": "ENUM",
+          "default": "",
+          "check": "",
+          "primary": true,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": [
+            "Male",
+            "Female",
+            "Both"
+          ]
+        },
+        {
+          "id": "Qprd61ZKBfGx670Ll7IsY",
+          "name": "value",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        },
+        {
+          "id": "IyMO-BxjIuHaQ6nuTghcb",
+          "name": "density",
+          "type": "DECIMAL",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "values": []
+        }
+      ],
+      "comment": "",
+      "indices": [],
+      "color": "#175e7a",
+      "hidden": false
+    },
+    {
+      "id": "Q_Koqil3B3JJW--YpWkQD",
+      "name": "measurement_info",
+      "x": -280.49999999999994,
+      "y": -123.00000000000011,
+      "locked": false,
+      "fields": [
+        {
+          "id": "M2D_Zn_eEXyU1BA5c8tIT",
+          "name": "district_id",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": true,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        },
+        {
+          "id": "UPzdeIxvP-5o7AK69AaM-",
+          "name": "reference_date",
+          "type": "DATE",
+          "default": "",
+          "check": "",
+          "primary": true,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        },
+        {
+          "id": "nT9u2ayxUXIoXzlM8ku3P",
+          "name": "measurement_id",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": true,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        }
+      ],
+      "comment": "",
+      "indices": [],
+      "color": "#175e7a"
+    },
+    {
+      "id": "nDaNIPaxF30Nu0mq1Qse0",
+      "name": "tourism",
+      "x": 113.49999999999989,
+      "y": 95.49999999999997,
+      "locked": false,
+      "fields": [
+        {
+          "id": "WhSwqhQ4_mkZrlCnkcoE4",
+          "name": "mesuremnt_id",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": true,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        },
+        {
+          "id": "Qprd61ZKBfGx670Ll7IsY",
+          "name": "value",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
+        },
+        {
+          "id": "IyMO-BxjIuHaQ6nuTghcb",
+          "name": "density",
+          "type": "DECIMAL",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "values": []
+        }
+      ],
+      "comment": "",
+      "indices": [],
+      "color": "#175e7a",
+      "hidden": false
+    }
+  ],
+  "relationships": [
+    {
+      "startTableId": "Q_Koqil3B3JJW--YpWkQD",
+      "startFieldId": "M2D_Zn_eEXyU1BA5c8tIT",
+      "endTableId": "ZrWtgGKXzZgn5WMIKaRTd",
+      "endFieldId": "RLasjEPCnqX_9pXYz6tqd",
+      "cardinality": "many_to_one",
+      "updateConstraint": "No action",
+      "deleteConstraint": "No action",
+      "name": "",
+      "id": "zDi8S88AbPk0CpM9RHUIs"
+    },
+    {
+      "startTableId": "4uKUZPDiO0Q7I4bWYR3-g",
+      "startFieldId": "WhSwqhQ4_mkZrlCnkcoE4",
+      "endTableId": "Q_Koqil3B3JJW--YpWkQD",
+      "endFieldId": "nT9u2ayxUXIoXzlM8ku3P",
+      "cardinality": "many_to_one",
+      "updateConstraint": "No action",
+      "deleteConstraint": "No action",
+      "name": "",
+      "id": "CHVf14otVyopIs2sNnYH_"
+    },
+    {
+      "startTableId": "nDaNIPaxF30Nu0mq1Qse0",
+      "startFieldId": "WhSwqhQ4_mkZrlCnkcoE4",
+      "endTableId": "Q_Koqil3B3JJW--YpWkQD",
+      "endFieldId": "nT9u2ayxUXIoXzlM8ku3P",
+      "cardinality": "one_to_one",
+      "updateConstraint": "No action",
+      "deleteConstraint": "No action",
+      "name": "",
+      "id": "tIYgCoIRJ8jOcX3p1bO5G"
+    }
+  ],
+  "notes": [],
+  "subjectAreas": [],
+  "database": "mysql",
+  "title": "Untitled Diagram"
+}
