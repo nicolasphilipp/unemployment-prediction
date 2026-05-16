@@ -1,0 +1,12 @@
+table,attribute,description,ontology,ontology_uri
+district,district_id,Internal identifier of Vienna district,GeoNames,http://www.geonames.org/ontology#Feature
+district,nuts_code,NUTS statistical region code,SDMX,https://sdmx.org/
+district,district_code,Official municipality district code,GeoNames,http://www.geonames.org/ontology#AdministrativeDivision
+measurement_info,measurement_id,Unique measurement identifier,QUDT,http://qudt.org/schema/qudt/Quantity
+measurement_info,district_id,Reference to Vienna district,GeoNames,http://www.geonames.org/ontology#Feature
+measurement_info,reference_date,Date of observation,OWL-Time,https://www.w3.org/2006/time#TemporalEntity
+tourism,value,Total guest overnight stays,SDMX,https://sdmx.org/
+tourism,density,Guest overnight stays per 1000 inhabitants,QUDT,http://qudt.org/schema/qudt/Quantity
+unemployment,gender,Gender category of unemployment statistic,SDMX,https://sdmx.org/
+unemployment,value,Average number of unemployed persons,SDMX,https://sdmx.org/
+unemployment,density,Unemployed persons per 1000 inhabitants,QUDT,http://qudt.org/schema/qudt/Quantity
