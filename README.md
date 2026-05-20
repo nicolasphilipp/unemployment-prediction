@@ -38,6 +38,63 @@ The experiment uses two datasets from the Austrian Open Government Data portal:
 - `TOU_DENSITY`: overnight stays per 1,000 inhabitants
 - `POP_AVE`: average population
 
+## Database Schema & Views (DBRepo)
+
+The experiment data is stored in a relational database (3NF) on the TU Wien DBRepo test instance. SQL views de-normalize the schema into query-ready formats for the ML pipeline.
+
+### Database Access
+
+- **DBRepo Instance**: https://test.dbrepo.tuwien.ac.at
+- **Database ID**: `412fb0ce-5299-4d0e-a271-4641b1365b8a`
+- **Persistent Identifier**: [https://doi.org/10.82556/n73d-ks38](https://doi.org/10.82556/n73d-ks38)
+
+### Schema Overview (3NF)
+
+The database follows Third Normal Form with four tables:
+
+| Table | Description | Foreign Key |
+|-------|-------------|-------------|
+| `district` | Vienna district identifiers and NUTS codes | `district_id` (PK) |
+| `measurement_info` | Temporal and district metadata for measurements | `district_id` → `district`, `measurement_id` (UNIQUE) |
+| `unemployment` | Unemployment statistics by gender | `measurement_id` → `measurement_info` |
+| `tourism` | Tourism overnight stay statistics | `measurement_id` → `measurement_info` |
+
+### SQL Views for ML Pipeline
+
+The following views de-normalize the schema to support the machine learning workflow. All views are defined in [`docs/views.sql`](docs/views.sql) and implemented in the DBRepo instance.
+
+#### Base Feature View
+
+| View Name | Purpose | Key Columns |
+|-----------|---------|-------------|
+| `ml_feature_table` | Main denormalized feature table joining all sources. Filters: gender='TOTAL', excludes district 90000 (Vienna total), excludes COVID years 2020-2021. | `district_code`, `ref_year`, `uep_value`, `uep_density`, `tou_value`, `tou_density` |
+
+#### Data Split Views (Chronological)
+
+| View Name | Purpose | Time Range | Expected Rows |
+|-----------|---------|------------|---------------|
+| `train_split` | Training data for model fitting | 2002-2015 | ~322 |
+| `validation_split` | Validation data for hyperparameter tuning | 2016-2018 | ~69 |
+| `test_split` | Test data for final evaluation | 2019+ | ~69 |
+
+#### Analytical Views
+
+| View Name | Purpose | Use Case |
+|-----------|---------|----------|
+| `district_yearly_aggregates` | Per-district yearly averages (AVG of unemployment and tourism metrics) | Exploratory data analysis, trend visualization |
+| `gender_disaggregated_features` | Gender-specific data for models using sex as predictor (MALE/FEMALE only, excludes TOTAL) | Advanced modeling experiments |
+
+### Important Notes
+
+- **POP_AVE field**: The average population is not stored in the tourism table but can be calculated as `(tou_value * 1000.0) / tou_density` when needed.
+- **Gender values**: The `unemployment` table uses enum values: `'TOTAL'`, `'MALE'`, `'FEMALE'`.
+- **COVID exclusion**: Years 2020 and 2021 are excluded from all views as outliers (pandemic effect on tourism).
+
+### View Definitions Location
+
+- **SQL source**: [`docs/views.sql`](docs/views.sql)
+- **Live views**: https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/view
+
 ## File organisation
 
 This project follows a consistent file naming convention to improve clarity, reproducibility, and ease of collaboration. The structure is organised into dedicated directories based on file purpose.
