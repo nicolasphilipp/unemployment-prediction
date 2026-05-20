@@ -1,100 +1,120 @@
 -- ============================================================
 -- VIEW DEFINITIONS for Unemployment Prediction ML Pipeline
 -- Vienna Districts: Unemployment & Tourism Data (2002–present)
+--
+-- Schema (3NF):
+--   district       (district_id PK, nuts_code, district_code)
+--   measurement_info (measurement_id UNIQUE, district_id FK, reference_date)
+--   unemployment   (measurement_id FK, gender, value, density)
+--   tourism        (measurement_id FK, value, density)
+--
+-- NOTE: POP_AVE (average population) is absent from the tourism
+-- table schema. It must be added to tourism for full ML pipeline
+-- compatibility. Views will be updated once the column is added.
 -- ============================================================
 
+
 -- VIEW 1: ml_feature_table
--- Purpose: Main feature table for the ML pipeline.
--- Joins unemployment and tourism data on district and year,
--- filtered to total unemployment (SEX=0) to avoid duplication.
--- Exposes all numeric predictors and the target variable (UEP_VALUE).
+-- Purpose: Main denormalized feature table for the ML pipeline.
+--   Joins all four tables on measurement_id and district_id.
+--   Filters to gender = TOTAL to avoid row duplication.
+--   Excludes district 90000 (Vienna-wide total aggregate).
+--   Excludes COVID outlier years 2020 and 2021.
+--   This view is the base for all train/val/test split views.
 -- ============================================================
 CREATE VIEW ml_feature_table AS
 SELECT
-    u.DISTRICT_CODE,
-    u.REF_YEAR,
-    u.UEP_VALUE        AS unemployment_count,
-    u.UEP_DENSITY      AS unemployment_per_1000,
-    t.TOU_VALUE        AS overnight_stays,
-    t.TOU_DENSITY      AS overnight_stays_per_1000,
-    t.POP_AVE          AS avg_population
-FROM unemployment u
-INNER JOIN tourism t
-    ON  u.DISTRICT_CODE = t.DISTRICT_CODE
-    AND u.REF_YEAR      = t.REF_YEAR
-WHERE u.SEX = 0;  -- 0 = total (avoids duplicate rows for men/women)
+    d.district_code                 AS district_code,
+    YEAR(mi.reference_date)         AS ref_year,
+    u.value                         AS uep_value,
+    u.density                       AS uep_density,
+    t.value                         AS tou_value,
+    t.density                       AS tou_density
+FROM measurement_info mi
+JOIN district    d  ON  d.district_id   = mi.district_id
+JOIN unemployment u ON  u.measurement_id = mi.measurement_id
+JOIN tourism      t ON  t.measurement_id = mi.measurement_id
+WHERE u.gender          = 'TOTAL'
+  AND d.district_code   != 90000
+  AND YEAR(mi.reference_date) NOT IN (2020, 2021);
 
 
--- VIEW 2: ml_feature_table_by_gender
--- Purpose: Gender-disaggregated feature table.
--- Useful for experiments that include SEX as a feature.
--- Exposes SEX (1=men, 2=women) alongside all numeric predictors.
--- ============================================================
-CREATE VIEW ml_feature_table_by_gender AS
-SELECT
-    u.DISTRICT_CODE,
-    u.REF_YEAR,
-    u.SEX,
-    u.UEP_VALUE        AS unemployment_count,
-    u.UEP_DENSITY      AS unemployment_per_1000,
-    t.TOU_VALUE        AS overnight_stays,
-    t.TOU_DENSITY      AS overnight_stays_per_1000,
-    t.POP_AVE          AS avg_population
-FROM unemployment u
-INNER JOIN tourism t
-    ON  u.DISTRICT_CODE = t.DISTRICT_CODE
-    AND u.REF_YEAR      = t.REF_YEAR
-WHERE u.SEX IN (1, 2);
-
-
--- VIEW 3: district_yearly_aggregates
--- Purpose: Aggregated statistics per district across all years.
--- Useful for exploratory analysis and feature engineering
--- (e.g. computing baseline unemployment levels per district).
--- ============================================================
-CREATE VIEW district_yearly_aggregates AS
-SELECT
-    u.DISTRICT_CODE,
-    u.REF_YEAR,
-    AVG(u.UEP_VALUE)   AS avg_unemployment_count,
-    AVG(u.UEP_DENSITY) AS avg_unemployment_per_1000,
-    AVG(t.TOU_VALUE)   AS avg_overnight_stays,
-    AVG(t.TOU_DENSITY) AS avg_overnight_stays_per_1000,
-    AVG(t.POP_AVE)     AS avg_population
-FROM unemployment u
-INNER JOIN tourism t
-    ON  u.DISTRICT_CODE = t.DISTRICT_CODE
-    AND u.REF_YEAR      = t.REF_YEAR
-WHERE u.SEX = 0
-GROUP BY u.DISTRICT_CODE, u.REF_YEAR;
-
-
--- VIEW 4: train_split
--- Purpose: Training set for the ML pipeline (2002–2019).
--- Chronological split — earlier years used for training
--- to prevent data leakage from future observations.
+-- VIEW 2: train_split
+-- Purpose: Training portion of the chronological data split.
+--   Covers years 2002–2015 (322 expected rows).
+--   Used to fit both Linear Regression and Random Forest models.
 -- ============================================================
 CREATE VIEW train_split AS
 SELECT *
 FROM ml_feature_table
-WHERE REF_YEAR BETWEEN 2002 AND 2019;
+WHERE ref_year <= 2015;
 
 
--- VIEW 5: validation_split
--- Purpose: Validation set (2020–2021).
--- Used for hyperparameter tuning during model development.
+-- VIEW 3: validation_split
+-- Purpose: Validation portion of the chronological data split.
+--   Covers years 2016–2018 (69 expected rows).
+--   Used for hyperparameter tuning during model development.
 -- ============================================================
 CREATE VIEW validation_split AS
 SELECT *
 FROM ml_feature_table
-WHERE REF_YEAR BETWEEN 2020 AND 2021;
+WHERE ref_year BETWEEN 2016 AND 2018;
 
 
--- VIEW 6: test_split
--- Purpose: Test set (2022–present).
--- Held out entirely until final model evaluation.
+-- VIEW 4: test_split
+-- Purpose: Test portion of the chronological data split.
+--   Covers years 2019+ (69 expected rows; 2020–2021 already
+--   excluded in ml_feature_table base view).
+--   Held out entirely until final model evaluation.
 -- ============================================================
 CREATE VIEW test_split AS
 SELECT *
 FROM ml_feature_table
-WHERE REF_YEAR >= 2022;
+WHERE ref_year >= 2019;
+
+
+-- VIEW 5: district_yearly_aggregates
+-- Purpose: Per-district yearly aggregations for EDA and
+--   baseline feature engineering.
+--   Exposes average unemployment and tourism metrics grouped
+--   by district and year, useful for trend analysis.
+-- ============================================================
+CREATE VIEW district_yearly_aggregates AS
+SELECT
+    d.district_code                  AS district_code,
+    YEAR(mi.reference_date)          AS ref_year,
+    AVG(u.value)                     AS avg_uep_value,
+    AVG(u.density)                   AS avg_uep_density,
+    AVG(t.value)                     AS avg_tou_value,
+    AVG(t.density)                   AS avg_tou_density
+FROM measurement_info mi
+JOIN district     d ON  d.district_id    = mi.district_id
+JOIN unemployment u ON  u.measurement_id = mi.measurement_id
+JOIN tourism      t ON  t.measurement_id = mi.measurement_id
+WHERE u.gender        = 'TOTAL'
+  AND d.district_code != 90000
+GROUP BY d.district_code, YEAR(mi.reference_date);
+
+
+-- VIEW 6: gender_disaggregated_features
+-- Purpose: Gender-disaggregated feature table (male/female).
+--   Includes GENDER column for experiments that incorporate
+--   sex as an additional predictor variable.
+--   Excludes COVID years and Vienna-wide total.
+-- ============================================================
+CREATE VIEW gender_disaggregated_features AS
+SELECT
+    d.district_code                  AS district_code,
+    YEAR(mi.reference_date)          AS ref_year,
+    u.gender                         AS gender,
+    u.value                          AS uep_value,
+    u.density                        AS uep_density,
+    t.value                          AS tou_value,
+    t.density                        AS tou_density
+FROM measurement_info mi
+JOIN district     d ON  d.district_id    = mi.district_id
+JOIN unemployment u ON  u.measurement_id = mi.measurement_id
+JOIN tourism      t ON  t.measurement_id = mi.measurement_id
+WHERE u.gender IN ('MALE', 'FEMALE')
+  AND d.district_code  != 90000
+  AND YEAR(mi.reference_date) NOT IN (2020, 2021);
