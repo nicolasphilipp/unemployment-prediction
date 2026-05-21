@@ -85,11 +85,7 @@
           "increment": false,
           "comment": "",
           "size": "",
-          "values": [
-            "Male",
-            "Female",
-            "Both"
-          ]
+          "values": ["Male", "Female", "Both"]
         },
         {
           "id": "Qprd61ZKBfGx670Ll7IsY",
@@ -172,6 +168,20 @@
           "comment": "",
           "size": "",
           "values": []
+        },
+        {
+          "id": "mYjvlJEdpuXUadnUWoEyT",
+          "name": "population_avg",
+          "type": "INTEGER",
+          "default": "",
+          "check": "",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "comment": "",
+          "size": "",
+          "values": []
         }
       ],
       "comment": "",
@@ -187,7 +197,7 @@
       "fields": [
         {
           "id": "WhSwqhQ4_mkZrlCnkcoE4",
-          "name": "mesuremnt_id",
+          "name": "measurement_id",
           "type": "INTEGER",
           "default": "",
           "check": "",
@@ -271,5 +281,5 @@
   "notes": [],
   "subjectAreas": [],
   "database": "mysql",
-  "title": "Untitled Diagram"
+  "title": "ERD"
 }
