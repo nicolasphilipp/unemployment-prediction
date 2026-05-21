@@ -19,15 +19,16 @@ CREATE TABLE IF NOT EXISTS `measurement_info` (
 	`district_id` INTEGER NOT NULL,
 	`reference_date` DATE NOT NULL,
 	`measurement_id` INTEGER NOT NULL UNIQUE,
+  `population_avg` INTEGER NOT NULL,
 	PRIMARY KEY(`district_id`, `reference_date`)
 );
 
 
 CREATE TABLE IF NOT EXISTS `tourism` (
-	`mesuremnt_id` INTEGER NOT NULL,
+	`measurement_id` INTEGER NOT NULL,
 	`value` INTEGER NOT NULL,
 	`density` DECIMAL NOT NULL,
-	PRIMARY KEY(`mesuremnt_id`)
+	PRIMARY KEY(`measurement_id`)
 );
 
 
@@ -38,5 +39,5 @@ ALTER TABLE `unemployment`
 ADD FOREIGN KEY(`measurement_id`) REFERENCES `measurement_info`(`measurement_id`)
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE `tourism`
-ADD FOREIGN KEY(`mesuremnt_id`) REFERENCES `measurement_info`(`measurement_id`)
+ADD FOREIGN KEY(`measurement_id`) REFERENCES `measurement_info`(`measurement_id`)
 ON UPDATE NO ACTION ON DELETE NO ACTION;
