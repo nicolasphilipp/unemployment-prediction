@@ -71,31 +71,33 @@ FROM ml_feature_table
 WHERE ref_year >= 2019;
 
 
--- VIEW 5: district_yearly_aggregates
--- Purpose: Per-district yearly aggregations for EDA and
---   baseline feature engineering.
---   Exposes average unemployment and tourism metrics grouped
---   by district and year, useful for trend analysis.
+-- VIEW 5: inner_city_districts
+-- Purpose: Feature table restricted to the nine inner-city districts
+--   (90100–90900) which exhibit disproportionately high tourism
+--   activity relative to their resident population.
+--   Useful for training district-segment-specific models and for
+--   EDA comparing inner-city vs. outer-district unemployment dynamics.
 -- ============================================================
-CREATE VIEW district_yearly_aggregates AS
-SELECT
-    d.district_code                  AS district_code,
-    YEAR(mi.reference_date)          AS ref_year,
-    mi.population_avg                AS population_avg,
-    AVG(u.value)                     AS avg_uep_value,
-    AVG(u.density)                   AS avg_uep_density,
-    AVG(t.value)                     AS avg_tou_value,
-    AVG(t.density)                   AS avg_tou_density
-FROM measurement_info mi
-JOIN district     d ON  d.district_id    = mi.district_id
-JOIN unemployment u ON  u.measurement_id = mi.measurement_id
-JOIN tourism      t ON  t.measurement_id = mi.measurement_id
-WHERE u.gender        = 'Both'
-  AND d.district_code != 90000
-GROUP BY d.district_code, YEAR(mi.reference_date), mi.population_avg;
+CREATE VIEW inner_city_districts AS
+SELECT *
+FROM ml_feature_table
+WHERE district_code <= 90900;
 
 
--- VIEW 6: gender_disaggregated_features
+-- VIEW 6: outer_city_districts
+-- Purpose: Feature table restricted to the fourteen outer residential
+--   districts (91000–92300) which have lower tourism density and
+--   more stable unemployment patterns.
+--   Complement of inner_city_districts; together they cover all
+--   23 Vienna districts (excl. aggregate 90000).
+-- ============================================================
+CREATE VIEW outer_city_districts AS
+SELECT *
+FROM ml_feature_table
+WHERE district_code >= 91000;
+
+
+-- VIEW 7: gender_disaggregated_features
 -- Purpose: Gender-disaggregated feature table (male/female).
 --   Includes GENDER column for experiments that incorporate
 --   sex as an additional predictor variable.
