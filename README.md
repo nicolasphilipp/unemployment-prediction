@@ -52,12 +52,12 @@ The experiment data is stored in a relational database (3NF) on the TU Wien DBRe
 
 The database follows Third Normal Form with four tables:
 
-| Table | Description | Foreign Key |
-|-------|-------------|-------------|
-| `district` | Vienna district identifiers and NUTS codes | `district_id` (PK) |
+| Table              | Description                                     | Foreign Key                                           |
+| ------------------ | ----------------------------------------------- | ----------------------------------------------------- |
+| `district`         | Vienna district identifiers and NUTS codes      | `district_id` (PK)                                    |
 | `measurement_info` | Temporal and district metadata for measurements | `district_id` → `district`, `measurement_id` (UNIQUE) |
-| `unemployment` | Unemployment statistics by gender | `measurement_id` → `measurement_info` |
-| `tourism` | Tourism overnight stay statistics | `measurement_id` → `measurement_info` |
+| `unemployment`     | Unemployment statistics by gender               | `measurement_id` → `measurement_info`                 |
+| `tourism`          | Tourism overnight stay statistics               | `measurement_id` → `measurement_info`                 |
 
 ### SQL Views for ML Pipeline
 
@@ -65,29 +65,29 @@ The following views de-normalize the schema to support the machine learning work
 
 #### Base Feature View
 
-| View Name | Purpose | Key Columns |
-|-----------|---------|-------------|
+| View Name          | Purpose                                                                                                                                               | Key Columns                                                                         |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `ml_feature_table` | Main denormalized feature table joining all sources. Filters: gender='TOTAL', excludes district 90000 (Vienna total), excludes COVID years 2020-2021. | `district_code`, `ref_year`, `uep_value`, `uep_density`, `tou_value`, `tou_density` |
 
 #### Data Split Views (Chronological)
 
-| View Name | Purpose | Time Range | Expected Rows |
-|-----------|---------|------------|---------------|
-| `train_split` | Training data for model fitting | 2002-2015 | ~322 |
-| `validation_split` | Validation data for hyperparameter tuning | 2016-2018 | ~69 |
-| `test_split` | Test data for final evaluation | 2019+ | ~69 |
+| View Name          | Purpose                                   | Time Range | Expected Rows |
+| ------------------ | ----------------------------------------- | ---------- | ------------- |
+| `train_split`      | Training data for model fitting           | 2002-2015  | ~322          |
+| `validation_split` | Validation data for hyperparameter tuning | 2016-2018  | ~69           |
+| `test_split`       | Test data for final evaluation            | 2019+      | ~69           |
 
 #### Analytical Views
 
-| View Name | Purpose | Use Case |
-|-----------|---------|----------|
-| `district_yearly_aggregates` | Per-district yearly averages (AVG of unemployment and tourism metrics) | Exploratory data analysis, trend visualization |
-| `gender_disaggregated_features` | Gender-specific data for models using sex as predictor (MALE/FEMALE only, excludes TOTAL) | Advanced modeling experiments |
+| View Name                       | Purpose                                                                                                               | Use Case                                                                  |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `inner_city_districts`          | Feature table restricted to the nine inner-city districts (90100-90900) with disproportionately high tourism activity | District-segment-specific models and inner-city vs. outer-district EDA    |
+| `outer_city_districts`          | Feature table restricted to the fourteen outer residential districts (91000-92300) with lower tourism density         | District-segment-specific models and comparison against inner-city trends |
+| `gender_disaggregated_features` | Gender-specific data for models using sex as predictor (Male/Female only, excludes Both)                              | Advanced modeling experiments                                             |
 
 ### Important Notes
 
-- **POP_AVE field**: The average population is not stored in the tourism table but can be calculated as `(tou_value * 1000.0) / tou_density` when needed.
-- **Gender values**: The `unemployment` table uses enum values: `'TOTAL'`, `'MALE'`, `'FEMALE'`.
+- **Gender values**: The `unemployment` table uses enum values: `'Both'`, `'Male'`, `'Female'`.
 - **COVID exclusion**: Years 2020 and 2021 are excluded from all views as outliers (pandemic effect on tourism).
 
 ### View Definitions Location
