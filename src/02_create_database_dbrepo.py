@@ -35,25 +35,23 @@ print(f"Targeting database with ID: {db_id}")
 #
 # print("Cleanup complete. Ready to create new tables.")
 
+
 # Helper function to create table via direct API
 def create_table_via_api(table_payload):
     url = f"{endpoint}/api/v1/database/{db_id}/table"
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
 
     res = requests.post(
-        url,
-        headers=headers,
-        auth=(username, password),
-        json=table_payload
+        url, headers=headers, auth=(username, password), json=table_payload
     )
 
     if not res.ok:
-        print(f"Error creating '{table_payload['name']}': {res.status_code} - {res.text}")
+        print(
+            f"Error creating '{table_payload['name']}': {res.status_code} - {res.text}"
+        )
         raise Exception(f"Table '{table_payload['name']}' creation failed.")
     print(f"Successfully created table '{table_payload['name']}' via REST API.")
+
 
 # create tables
 district_payload = {
@@ -64,13 +62,13 @@ district_payload = {
     "columns": [
         {"name": "district_id", "type": "int", "null_allowed": False},
         {"name": "nuts_code", "type": "varchar", "size": 5, "null_allowed": False},
-        {"name": "district_code", "type": "int", "null_allowed": False}
+        {"name": "district_code", "type": "int", "null_allowed": False},
     ],
     "constraints": {
         "primary_key": ["district_id"],
         "uniques": [["district_code"]],
-        "foreign_keys": []
-    }
+        "foreign_keys": [],
+    },
 }
 create_table_via_api(district_payload)
 
@@ -81,7 +79,8 @@ measurement_info_payload = {
     "columns": [
         {"name": "district_id", "type": "int", "null_allowed": False},
         {"name": "reference_date", "type": "date", "null_allowed": False},
-        {"name": "measurement_id", "type": "int", "null_allowed": False}
+        {"name": "measurement_id", "type": "int", "null_allowed": False},
+        {"name": "population_avg", "type": "int", "null_allowed": False},
     ],
     "constraints": {
         "primary_key": ["district_id", "reference_date"],
@@ -90,10 +89,10 @@ measurement_info_payload = {
             {
                 "columns": ["district_id"],
                 "referenced_table": "district",
-                "referenced_columns": ["district_id"]
+                "referenced_columns": ["district_id"],
             }
-        ]
-    }
+        ],
+    },
 }
 create_table_via_api(measurement_info_payload)
 
@@ -103,21 +102,32 @@ unemployment_payload = {
     "is_schema_public": True,
     "columns": [
         {"name": "measurement_id", "type": "int", "null_allowed": False},
-        {"name": "gender", "type": "enum", "enums": ["Male", "Female", "Both"], "null_allowed": False},
+        {
+            "name": "gender",
+            "type": "enum",
+            "enums": ["Male", "Female", "Both"],
+            "null_allowed": False,
+        },
         {"name": "value", "type": "int", "null_allowed": False},
-        {"name": "density", "type": "decimal", "size": 10, "d": 4, "null_allowed": False}
+        {
+            "name": "density",
+            "type": "decimal",
+            "size": 10,
+            "d": 4,
+            "null_allowed": False,
+        },
     ],
     "constraints": {
         "foreign_keys": [
             {
                 "columns": ["measurement_id"],
                 "referenced_table": "measurement_info",
-                "referenced_columns": ["measurement_id"]
+                "referenced_columns": ["measurement_id"],
             }
         ],
         "uniques": [],
-        "primary_key": ["measurement_id", "gender"]
-    }
+        "primary_key": ["measurement_id", "gender"],
+    },
 }
 create_table_via_api(unemployment_payload)
 
@@ -128,19 +138,25 @@ tourism_payload = {
     "columns": [
         {"name": "measurement_id", "type": "int", "null_allowed": False},
         {"name": "value", "type": "int", "null_allowed": False},
-        {"name": "density", "type": "decimal", "size": 10, "d": 4, "null_allowed": False}
+        {
+            "name": "density",
+            "type": "decimal",
+            "size": 10,
+            "d": 4,
+            "null_allowed": False,
+        },
     ],
     "constraints": {
         "foreign_keys": [
             {
                 "columns": ["measurement_id"],
                 "referenced_table": "measurement_info",
-                "referenced_columns": ["measurement_id"]
+                "referenced_columns": ["measurement_id"],
             }
         ],
         "uniques": [],
-        "primary_key": ["measurement_id"]
-    }
+        "primary_key": ["measurement_id"],
+    },
 }
 create_table_via_api(tourism_payload)
 
@@ -149,12 +165,10 @@ create_table_via_api(tourism_payload)
 detailed_description = (
     "This database integrates two distinct open government datasets to predict unemployment levels "
     "in Vienna districts using tourism and demographic data. \n\n"
-
     "Source 1: Unemployed Persons Since 2002 - Districts of Vienna. "
     "Original Publisher: Stadt Wien - Wirtschaft und Finanzen (Open Government Data Austria). "
     "Dataset ID: 9462d680-ede9-40b9-8102-b9baebaa4fbb. "
     "URI: https://www.data.gv.at/katalog/dataset/9462d680-ede9-40b9-8102-b9baebaa4fbb \n\n"
-
     "Source 2: Guest Overnight Stays Since 2002 - Districts of Vienna. "
     "Original Publisher: Stadt Wien - Wirtschaft und Finanzen (Open Government Data Austria). "
     "Dataset ID: ae4ebf87-9f46-4f05-9e3d-dbff002b216d. "
@@ -170,44 +184,50 @@ identifier_payload = {
     "titles": [
         {
             "title": "Prediction of unemployment in Vienna districts using tourism and demographic data",
-            "language": "en"
+            "language": "en",
         }
     ],
     "descriptions": [
-        {
-            "description": detailed_description,
-            "language": "en",
-            "type": "Abstract"
-        }
+        {"description": detailed_description, "language": "en", "type": "Abstract"}
     ],
     "funders": [],
     "licenses": [
         {
             "identifier": "CC-BY-4.0",
             "uri": "https://www.data.gv.at/info/netiquette?locale=de",
-            "description": "Creative Commons Attribution 4.0 International"
+            "description": "Creative Commons Attribution 4.0 International",
         }
     ],
     "creators": [
-        {"creator_name": "Florian Angerer", "affiliation": "TU Wien", "name_type": "Personal"},
-        {"creator_name": "Swetha Maria Siby", "affiliation": "TU Wien", "name_type": "Personal"},
-        {"creator_name": "Nicolas Philipp", "affiliation": "TU Wien", "name_type": "Personal"},
-        {"creator_name": "Midhun Suresh Nair", "affiliation": "TU Wien", "name_type": "Personal"}
+        {
+            "creator_name": "Florian Angerer",
+            "affiliation": "TU Wien",
+            "name_type": "Personal",
+        },
+        {
+            "creator_name": "Swetha Maria Siby",
+            "affiliation": "TU Wien",
+            "name_type": "Personal",
+        },
+        {
+            "creator_name": "Nicolas Philipp",
+            "affiliation": "TU Wien",
+            "name_type": "Personal",
+        },
+        {
+            "creator_name": "Midhun Suresh Nair",
+            "affiliation": "TU Wien",
+            "name_type": "Personal",
+        },
     ],
-    "related_identifiers": []
+    "related_identifiers": [],
 }
 
 url = f"{endpoint}/api/v1/identifier"
-headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-}
+headers = {"Content-Type": "application/json", "Accept": "application/json"}
 
 response = requests.post(
-    url,
-    headers=headers,
-    auth=(username, password),
-    json=identifier_payload
+    url, headers=headers, auth=(username, password), json=identifier_payload
 )
 
 if response.ok:
