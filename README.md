@@ -95,6 +95,32 @@ The following views de-normalize the schema to support the machine learning work
 - **SQL source**: [`docs/views.sql`](docs/views.sql)
 - **Live views**: https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/view
 
+## API Reimplementation
+
+The experiment loads data exclusively from the DBRepo REST API instead of local CSV files.
+
+### API Configuration
+
+Configuration is managed via environment variables in `config/.env` (not committed to git):
+
+| Variable | Description |
+|----------|-------------|
+| `DBREPO_BASE_URL` | DBRepo instance URL |
+| `DBREPO_DATABASE_ID` | Database UUID |
+| `DBREPO_USERNAME` | Authentication username |
+| `DBREPO_PASSWORD` | Authentication password |
+
+### Usage
+
+```python
+from dbrepo_client import create_client
+
+client = create_client()
+df_train = client.get_train_data()      # 322 rows (2002-2015)
+df_val = client.get_validation_data()   # 69 rows (2016-2018)
+df_test = client.get_test_data()        # 69 rows (2019+)
+```
+
 ## File organisation
 
 This project follows a consistent file naming convention to improve clarity, reproducibility, and ease of collaboration. The structure is organised into dedicated directories based on file purpose.
