@@ -219,3 +219,10 @@ Example:
 - Keep names descriptive but concise
 - Use versioning (`v1.0`, `v2.0`, ...) for datasets, figures, and models
 - Ensure naming consistency across all directories
+
+## Research Object Crate (RO-Crate)
+
+This repository includes a valid [RO-Crate](https://www.researchobject.org/ro-crate/) metadata file describing the entire experiment package, datasets, models, code, and authors. 
+
+- **RO-Crate Metadata:** [`ro-crate-metadata.json`](./ro-crate-metadata.json)
+- **Validation Report:** [`docs/validation/ro-crate-validation.txt`](./docs/validation/ro-crate-validation.txt)
