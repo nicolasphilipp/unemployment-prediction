@@ -1,12 +1,15 @@
 table,attribute,description,ontology,ontology_uri
 district,district_id,Internal identifier of Vienna district,GeoNames,http://www.geonames.org/ontology#Feature
-district,nuts_code,NUTS statistical region code,SDMX,https://sdmx.org/
-district,district_code,Official municipality district code,GeoNames,http://www.geonames.org/ontology#AdministrativeDivision
+district,nuts_code,NUTS statistical region code,SDMX,http://data.europa.eu/nuts/code
+district,district_code,Official municipality district code,GeoNames,http://www.geonames.org/ontology#A.ADM3
 measurement_info,measurement_id,Unique measurement identifier,QUDT,http://qudt.org/schema/qudt/Quantity
 measurement_info,district_id,Reference to Vienna district,GeoNames,http://www.geonames.org/ontology#Feature
 measurement_info,reference_date,Date of observation,OWL-Time,https://www.w3.org/2006/time#TemporalEntity
-tourism,value,Total guest overnight stays,SDMX,https://sdmx.org/
-tourism,density,Guest overnight stays per 1000 inhabitants,QUDT,http://qudt.org/schema/qudt/Quantity
-unemployment,gender,Gender category of unemployment statistic,SDMX,https://sdmx.org/
-unemployment,value,Average number of unemployed persons,SDMX,https://sdmx.org/
-unemployment,density,Unemployed persons per 1000 inhabitants,QUDT,http://qudt.org/schema/qudt/Quantity
+measurement_info,population_avg,Average total population of the district,SDMX,http://purl.org/linked-data/sdmx/2009/concept#obsValue
+tourism,measurement_id,Measurement link identifier,QUDT,http://qudt.org/schema/qudt/Quantity
+tourism,value,Total guest overnight stays,SDMX,http://purl.org/linked-data/sdmx/2009/concept#obsValue
+tourism,density,Guest overnight stays per 1000 inhabitants,QUDT,http://qudt.org/vocab/unit/NUM-PER-HRD
+unemployment,measurement_id,Measurement link identifier,QUDT,http://qudt.org/schema/qudt/Quantity
+unemployment,gender,Gender category of unemployment statistic,SDMX,http://purl.org/linked-data/sdmx/2009/code#sex
+unemployment,value,Average number of unemployed persons,SDMX,http://purl.org/linked-data/sdmx/2009/concept#obsValue
+unemployment,density,Unemployed persons per 1000 inhabitants,QUDT,http://qudt.org/vocab/unit/NUM-PER-HRD
