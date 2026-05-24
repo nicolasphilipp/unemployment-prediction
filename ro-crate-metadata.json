@@ -1,0 +1,196 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "Prediction of unemployment in Vienna districts using tourism and demographic data",
+      "description": "Experiment package for predicting unemployment in Vienna districts using tourism (overnight stays) and demographic data.",
+      "datePublished": "2026-05-24",
+      "license": {
+        "@id": "https://spdx.org/licenses/MIT"
+      },
+      "author": [
+        { "@id": "https://orcid.org/0009-0001-5857-4758" },
+        { "@id": "https://orcid.org/0009-0001-9927-9405" },
+        { "@id": "https://orcid.org/0009-0004-9308-5919" },
+        { "@id": "https://orcid.org/0009-0001-1784-2808" }
+      ],
+      "hasPart": [
+        { "@id": "data/vienna_unemployment_since_2002_raw_v1.0.csv" },
+        { "@id": "data/vienna_tourism_since_2002_raw_v1.0.csv" },
+        { "@id": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/info" },
+        { "@id": "data/vienna_unemployment_tourism_processed_v1.0.csv" },
+        { "@id": "src/unemployment_prediction.ipynb" },
+        { "@id": "src/02_create_database_dbrepo.py" },
+        { "@id": "src/dbrepo_client.py" },
+        { "@id": "src/02_load_data_dbrepo.ipynb" },
+        { "@id": "src/02_load_views_dbrepo.ipynb" },
+        { "@id": "src/02_semantic_mapping.ipynb" },
+        { "@id": "src/02_numeric_unit_mapping_dbrepo.ipynb" },
+        { "@id": "outputs/models/model_random_forest_v1.0.pkl" }
+      ]
+    },
+    {
+      "@id": "https://spdx.org/licenses/MIT",
+      "@type": "CreativeWork",
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    {
+      "@id": "https://orcid.org/0009-0001-5857-4758",
+      "@type": "Person",
+      "name": "Florian Angerer",
+      "affiliation": { "@id": "https://ror.org/04d836q62" }
+    },
+    {
+      "@id": "https://orcid.org/0009-0001-9927-9405",
+      "@type": "Person",
+      "name": "Swetha Maria Siby",
+      "affiliation": { "@id": "https://ror.org/04d836q62" }
+    },
+    {
+      "@id": "https://orcid.org/0009-0004-9308-5919",
+      "@type": "Person",
+      "name": "Nicolas Philipp",
+      "affiliation": { "@id": "https://ror.org/04d836q62" }
+    },
+    {
+      "@id": "https://orcid.org/0009-0001-1784-2808",
+      "@type": "Person",
+      "name": "Midhun Suresh Nair",
+      "affiliation": { "@id": "https://ror.org/04d836q62" }
+    },
+    {
+      "@id": "https://ror.org/04d836q62",
+      "@type": "Organization",
+      "name": "TU Wien"
+    },
+    {
+      "@id": "data/vienna_unemployment_since_2002_raw_v1.0.csv",
+      "@type": "Dataset",
+      "name": "Unemployed Persons Since 2002 - Districts of Vienna",
+      "description": "Raw data for unemployed persons in Vienna.",
+      "isBasedOn": {
+        "@id": "https://www.data.gv.at/katalog/dataset/9462d680-ede9-40b9-8102-b9baebaa4fbb"
+      },
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "data/vienna_tourism_since_2002_raw_v1.0.csv",
+      "@type": "Dataset",
+      "name": "Guest Overnight Stays Since 2002 - Districts of Vienna",
+      "description": "Raw data for guest overnight stays in Vienna.",
+      "isBasedOn": {
+        "@id": "https://www.data.gv.at/katalog/datasets/ae4ebf87-9f46-4f05-9e3d-dbff002b216d"
+      },
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/info",
+      "@type": "Dataset",
+      "name": "TU Wien DBRepo: Unemployment and Tourism Experiment Database",
+      "description": "Relational database (3NF) on the TU Wien DBRepo test instance storing the experiment data.",
+      "identifier": "doi:10.82556/n73d-ks38"
+    },
+    {
+      "@id": "data/vienna_unemployment_tourism_processed_v1.0.csv",
+      "@type": "Dataset",
+      "name": "Processed Unemployment and Tourism Data",
+      "description": "Cleaned and merged dataset ready for machine learning.",
+      "isBasedOn": {
+        "@id": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/info"
+      },
+      "identifier": "https://doi.org/10.XXXX/tuwrd.data.placeholder",
+      "encodingFormat": "text/csv"
+    },
+    {
+      "@id": "src/unemployment_prediction.ipynb",
+      "@type": "SoftwareSourceCode",
+      "name": "Unemployment Prediction Notebook",
+      "description": "Jupyter Notebook containing the ML pipeline for predicting unemployment.",
+      "identifier": "https://doi.org/10.XXXX/zenodo.software.placeholder",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "src/02_create_database_dbrepo.py",
+      "@type": "SoftwareSourceCode",
+      "name": "Database Creation Script",
+      "description": "Python script to generate the relational database schema in 3NF on DBRepo.",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "src/dbrepo_client.py",
+      "@type": "SoftwareSourceCode",
+      "name": "DBRepo Client API",
+      "description": "Python client for interacting with the DBRepo REST API.",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "src/02_load_data_dbrepo.ipynb",
+      "@type": "SoftwareSourceCode",
+      "name": "Data Loading Notebook",
+      "description": "Jupyter Notebook to load raw input data into the DBRepo tables.",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "src/02_load_views_dbrepo.ipynb",
+      "@type": "SoftwareSourceCode",
+      "name": "View Creation Notebook",
+      "description": "Jupyter Notebook to create SQL views for data de-normalization in DBRepo.",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "src/02_semantic_mapping.ipynb",
+      "@type": "SoftwareSourceCode",
+      "name": "Semantic Mapping Notebook",
+      "description": "Jupyter Notebook to map dataset attributes to ontological concepts.",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "src/02_numeric_unit_mapping_dbrepo.ipynb",
+      "@type": "SoftwareSourceCode",
+      "name": "Unit Mapping Notebook",
+      "description": "Jupyter Notebook to map numeric attributes to SI Digital Framework units.",
+      "programmingLanguage": {
+        "@id": "#python"
+      }
+    },
+    {
+      "@id": "#python",
+      "@type": "ComputerLanguage",
+      "name": "Python",
+      "version": "3.10"
+    },
+    {
+      "@id": "outputs/models/model_random_forest_v1.0.pkl",
+      "@type": "File",
+      "name": "Random Forest Model v1.0",
+      "description": "Trained Random Forest model for predicting unemployment.",
+      "identifier": "https://doi.org/10.XXXX/tuwrd.model.placeholder",
+      "encodingFormat": "application/octet-stream"
+    }
+  ]
+}
