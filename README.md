@@ -228,13 +228,42 @@ This repository includes a valid [RO-Crate](https://www.researchobject.org/ro-cr
 - **Validation Report:** [`docs/validation/ro-crate-validation.txt`](./docs/validation/ro-crate-validation.txt)
 
 
-## Licences
+## Licensing
 
-### Input Data
-The original datasets are sourced from the Vienna Open Government Data portal and remain subject to their original licensing conditions.
+### Input Data Licence
 
-### Software / Code
-The software developed for this project is released under the MIT License.
+The source datasets used in this project are provided by the Austrian Open Government Data portal (data.gv.at) and published by Stadt Wien under open government data licences that explicitly permit reuse for research and analytical purposes.
 
-### Generated Output Data
-Generated outputs such as predictions, evaluation plots, and processed artefacts are released under CC BY 4.0.
+These licences allow processing, transformation, and derivative analysis provided that proper attribution to the original publisher is maintained. All original dataset references and source URLs are preserved throughout the project documentation.
+
+---
+
+### Software / Source Code Licence
+
+The software developed for this project is licensed under the **MIT License**.
+
+The MIT License was selected because it is a permissive open-source licence that allows reuse, modification, distribution, and academic extension with minimal restrictions. This makes it fully compatible with the open reuse conditions of the source datasets while supporting transparency and reproducibility.
+
+---
+
+### Produced / Output Data Licence
+
+All generated project artefacts, including:
+
+- processed datasets
+- trained machine learning models
+- generated figures
+- semantic metadata files
+- documentation outputs
+
+are licensed under **CC BY 4.0**.
+
+This licence permits reuse, redistribution, and adaptation provided appropriate attribution is given to the project authors.
+
+---
+
+### Persistent Identifier
+
+Published project artefacts are referenced through the following DOI:
+
+https://doi.org/10.70124/464th-2za78
