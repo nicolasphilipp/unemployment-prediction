@@ -226,3 +226,15 @@ This repository includes a valid [RO-Crate](https://www.researchobject.org/ro-cr
 
 - **RO-Crate Metadata:** [`ro-crate-metadata.json`](./ro-crate-metadata.json)
 - **Validation Report:** [`docs/validation/ro-crate-validation.txt`](./docs/validation/ro-crate-validation.txt)
+
+
+## Licences
+
+### Input Data
+The original datasets are sourced from the Vienna Open Government Data portal and remain subject to their original licensing conditions.
+
+### Software / Code
+The software developed for this project is released under the MIT License.
+
+### Generated Output Data
+Generated outputs such as predictions, evaluation plots, and processed artefacts are released under CC BY 4.0.
