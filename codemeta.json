@@ -1,0 +1,23 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "Prediction of unemployment in Vienna districts using tourism and demographic data",
+  "version": "v1.1.0",
+  "identifier": "https://doi.org/10.70124/464th-2za78",
+  "description": "Software and notebooks for a FAIR data science experiment predicting unemployment levels in Vienna districts using tourism and demographic data.",
+  "license": "MIT",
+  "programmingLanguage": "Python",
+  "runtimePlatform": "Python 3.11.9",
+  "codeRepository": "https://github.com/nicolasphilipp/unemployment-prediction",
+  "softwareRequirements": [
+    "pandas==2.3.3",
+    "matplotlib==3.10.7",
+    "seaborn==0.13.2",
+    "scikit-learn==1.7.2",
+    "numpy==2.3.4",
+    "joblib==1.5.2",
+    "pyyaml==6.0.2",
+    "dbrepo==1.13.8",
+    "python-dotenv==1.2.2"
+  ]
+}
