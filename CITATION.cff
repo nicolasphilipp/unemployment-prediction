@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+
+title: "Prediction of Unemployment in Vienna Districts Using Tourism and Demographic Data"
+
+version: 1.2.0
+date-released: 2026-05-26
+
+doi: "10.5281/zenodo.20395175"
+
+url: "https://github.com/nicolasphilipp/unemployment-prediction"
+repository-code: "https://github.com/nicolasphilipp/unemployment-prediction"
+
+authors:
+  - family-names: "Angerer"
+    given-names: "Florian"
+    orcid: "https://orcid.org/0009-0001-5857-4758"
+
+  - family-names: "Siby"
+    given-names: "Swetha Maria"
+    orcid: "https://orcid.org/0009-0001-9927-9405"
+
+  - family-names: "Philipp"
+    given-names: "Nicolas"
+    orcid: "https://orcid.org/0009-0004-9308-5919"
+
+  - family-names: "Suresh Nair"
+    given-names: "Midhun"
+    orcid: "https://orcid.org/0009-0001-1784-2808"
+
+license: "MIT"
+
+abstract: >
+  This project predicts unemployment levels in Vienna districts
+  using tourism and demographic data from Austrian Open Government Data.
+  It applies machine learning models including Linear Regression
+  and Random Forest for predictive analysis.
+
+keywords:
+  - unemployment prediction
+  - machine learning
+  - Vienna
+  - tourism data
+  - open government data
