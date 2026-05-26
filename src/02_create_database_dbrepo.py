@@ -3,6 +3,7 @@ import requests
 from dotenv import load_dotenv
 
 load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", "config", ".env"))
 
 username = os.getenv("DBREPO_USERNAME")
 password = os.getenv("DBREPO_PASSWORD")

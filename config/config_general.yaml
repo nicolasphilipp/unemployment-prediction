@@ -1,5 +1,5 @@
 # General configuration for the project
-version: v1.0
+version: v1.2
 
 # Project paths (relative to notebook location)
 paths:
