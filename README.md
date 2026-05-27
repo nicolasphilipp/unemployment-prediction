@@ -16,10 +16,11 @@ This experiment investigates whether tourism activity and population size can se
 4. [Used Datasets](#used-datasets)
 5. [Database Schema and Views (DBRepo)](#database-schema--views-dbrepo)
 6. [API Configuration](#api-configuration)
-7. [File Organisation](#file-organisation)
-8. [Research Object Crate (RO-Crate)](#research-object-crate-ro-crate)
-9. [Licences](#licences)
-10. [Contributors](#contributors)
+7. [Croissant Metadata](#croissant-metadata)
+8. [File Organisation](#file-organisation)
+9. [Research Object Crate (RO-Crate)](#research-object-crate-ro-crate)
+10. [Licences](#licences)
+11. [Contributors](#contributors)
 
 ---
 
@@ -298,6 +299,27 @@ df_test  = client.get_test_data()        #  69 rows (2019+)
 ```
 
 ---
+
+## Croissant Metadata
+
+Croissant JSON-LD metadata for the input datasets is available in the [`croissant/`](croissant/) directory. These files follow the [Croissant ML metadata format](https://mlcommons.org/croissant/), a standard for describing machine learning datasets.
+
+| Dataset | File | Description |
+|---------|------|-------------|
+| Unemployment Data | [`croissant/unemployment_croissant.json`](croissant/unemployment_croissant.json) | Vienna unemployment statistics by district and gender (2002-2024) |
+| Tourism Data | [`croissant/tourism_croissant.json`](croissant/tourism_croissant.json) | Vienna tourism overnight stays, density, and population data (2002-2024) |
+
+Each Croissant file includes:
+
+- **Field names and data types** - Complete schema of all columns
+- **QUDT unit URIs** - Referencing the unit mappings from Task T2.3:
+  - `http://qudt.org/vocab/unit/Person` - Person counts (UEP_VALUE, POP_AVE)
+  - `http://qudt.org/vocab/unit/COUNT` - Count values (TOU_VALUE)
+  - `http://qudt.org/vocab/unit/NUM-PER-HRD` - Per-thousand ratios (UEP_DENSITY, TOU_DENSITY)
+- **Distribution information** - Direct download URLs to the raw CSV files on GitHub
+- **License information** - CC BY 4.0 (matching the source datasets)
+
+The Croissant metadata enhances the FAIRness of the datasets by providing machine-readable descriptions of the data structure, making them more **Findable** and **Interoperable** for automated ML tools and data catalogues.
 
 ## File Organisation
 

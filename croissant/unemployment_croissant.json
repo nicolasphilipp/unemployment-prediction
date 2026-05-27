@@ -1,0 +1,84 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "ml": "http://mlcommons.org/schema/",
+    "cr": "http://mlcommons.org/croissant/",
+    "sc": "https://schema.org/",
+    "recordSet": "ml:recordSet",
+    "field": "ml:field",
+    "dataType": {
+      "@id": "ml:dataType",
+      "@type": "@vocab"
+    },
+    "source": "ml:source",
+    "extract": "ml:extract",
+    "column": "ml:column"
+  },
+  "@type": "sc:Dataset",
+  "@id": "https://www.data.gv.at/katalog/dataset/9462d680-ede9-40b9-8102-b9baebaa4fbb",
+  "name": "Unemployed Persons Since 2002 - Districts of Vienna",
+  "description": "Annual average number of unemployed persons aged 15-64 by sex (absolute and per 1,000 inhabitants) in Vienna districts since 2002.",
+  "url": "https://www.data.gv.at/katalog/dataset/9462d680-ede9-40b9-8102-b9baebaa4fbb",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "creator": {
+    "@type": "sc:Organization",
+    "name": "Stadt Wien - Wirtschaft und Finanzen",
+    "url": "https://www.wien.gv.at/statistik/"
+  },
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "unemployment_csv",
+      "name": "vienna_unemployment_since_2002_raw_v1.0.csv",
+      "contentUrl": "https://raw.githubusercontent.com/nicolasphilipp/unemployment-prediction/main/data/vienna_unemployment_since_2002_raw_v1.0.csv",
+      "encodingFormat": "text/csv"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "unemployment_records",
+      "name": "Unemployment Records",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "name": "DISTRICT_CODE",
+          "description": "Municipality code for Vienna district",
+          "dataType": "sc:Integer",
+          "source": { "fileObject": { "@id": "unemployment_csv" }, "extract": { "column": "DISTRICT_CODE" } }
+        },
+        {
+          "@type": "cr:Field",
+          "name": "REF_YEAR",
+          "description": "Reference year of the measurement",
+          "dataType": "sc:Integer",
+          "source": { "fileObject": { "@id": "unemployment_csv" }, "extract": { "column": "REF_YEAR" } }
+        },
+        {
+          "@type": "cr:Field",
+          "name": "SEX",
+          "description": "Gender category (0=total, 1=male, 2=female)",
+          "dataType": "sc:Integer",
+          "source": { "fileObject": { "@id": "unemployment_csv" }, "extract": { "column": "SEX" } }
+        },
+        {
+          "@type": "cr:Field",
+          "name": "UEP_VALUE",
+          "description": "Average number of unemployed persons (age 15-64)",
+          "dataType": "sc:Integer",
+          "unitText": "http://qudt.org/vocab/unit/Person",
+          "source": { "fileObject": { "@id": "unemployment_csv" }, "extract": { "column": "UEP_VALUE" } }
+        },
+        {
+          "@type": "cr:Field",
+          "name": "UEP_DENSITY",
+          "description": "Unemployed persons per 1,000 inhabitants",
+          "dataType": "sc:Float",
+          "unitText": "http://qudt.org/vocab/unit/NUM-PER-HRD",
+          "source": { "fileObject": { "@id": "unemployment_csv" }, "extract": { "column": "UEP_DENSITY" } }
+        }
+      ]
+    }
+  ]
+}
