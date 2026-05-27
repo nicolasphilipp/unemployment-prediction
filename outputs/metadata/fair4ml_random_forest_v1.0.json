@@ -7,7 +7,7 @@
   "@type": "fair4ml:MLModel",
   "@id": "#random-forest-v1.0",
   "name": "Random Forest - Unemployment Prediction in Vienna Districts v1.0",
-  "description": "Random Forest regression pipeline (StandardScaler + RandomForestRegressor) trained to predict the average annual number of unemployed persons (age 15-64) in Vienna districts using guest overnight stays and average population as predictors, with one-hot-encoded district codes as additional features. Hyperparameters selected by exhaustive grid search (36 combinations) on the validation set. Best-performing model of the experiment; serialized as model_random_forest_v1.0.pkl.",
+  "description": "Random Forest regression pipeline (StandardScaler + RandomForestRegressor) trained to predict the average annual number of unemployed persons (age 15-64) in Vienna districts using guest overnight stays and average population as predictors, with one-hot-encoded district codes as additional features. Hyperparameters selected by exhaustive grid search (36 combinations) on the validation set. Search space: n_estimators in [100,200,300], max_depth in [3,5,10,None], min_samples_split in [2,5,10]. Best-performing model of the experiment: n_estimators=200, max_depth=None (fully grown trees), min_samples_split=2, random_state=42, n_jobs=-1, serialized as model_random_forest_v1.0.pkl.",
   "version": "1.0",
   "dateCreated": "2026-05-24",
   "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -57,7 +57,7 @@
   ],
   "fair4ml:trainedOn": {
     "@type": "Dataset",
-    "@id": "https://doi.org/10.82556/yqxx-kf04",
+    "@id": "doi:10.82556/yqxx-kf04",
     "name": "TU Wien DBRepo - Unemployment and Tourism Experiment Database (train_split + validation_split, 2002-2018, 391 rows)",
     "identifier": "doi:10.82556/yqxx-kf04",
     "url": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/view/3edb9ad6-78c1-48b7-afc6-f6c88b4a1a61/data",
@@ -83,14 +83,14 @@
   },
   "fair4ml:validatedOn": {
     "@type": "Dataset",
-    "@id": "https://doi.org/10.82556/hhsv-jw05",
+    "@id": "doi:10.82556/hhsv-jw05",
     "name": "TU Wien DBRepo - Unemployment and Tourism Experiment Database (validation_split view, 2016-2018, 69 rows)",
     "description": "Used for hyperparameter grid search selection (minimum validation RMSE criterion).",
     "url": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/view/abba7dcd-e5ab-4f5c-9cb8-b1fc1bb7d6b5/data"
   },
   "fair4ml:testedOn": {
     "@type": "Dataset",
-    "@id": "https://doi.org/10.82556/c624-8z19",
+    "@id": "doi:10.82556/c624-8z19",
     "name": "TU Wien DBRepo - Unemployment and Tourism Experiment Database (test_split view, 2019/2022/2023, 69 rows)",
     "description": "Held-out test set. Years 2019, 2022, 2023 across 23 Vienna districts.",
     "url": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/view/9469de00-ad14-489b-a8f1-73e1ec21218c/data"
@@ -102,7 +102,7 @@
     "dateCreated": "2026-05-24",
     "fair4ml:extrinsicEvaluation": false,
     "fair4ml:evaluationDataset": {
-      "@id": "https://doi.org/10.82556/c624-8z19",
+      "@id": "doi:10.82556/c624-8z19",
       "name": "test_split view (years 2019, 2022, 2023; 69 rows)"
     },
     "fair4ml:evaluationMetrics": [
