@@ -40,7 +40,9 @@
         { "@id": "src/02_load_views_dbrepo.ipynb" },
         { "@id": "src/02_semantic_mapping.ipynb" },
         { "@id": "src/02_numeric_unit_mapping_dbrepo.ipynb" },
-        { "@id": "outputs/models/model_random_forest_v1.0.pkl" }
+        { "@id": "outputs/models/model_random_forest_v1.0.pkl" },
+        { "@id": "outputs/metadata/fair4ml_random_forest_v1.0.json" },
+        { "@id": "docs/model-card.md" }
       ]
     },
     {
@@ -113,7 +115,7 @@
       "isBasedOn": {
         "@id": "https://test.dbrepo.tuwien.ac.at/database/412fb0ce-5299-4d0e-a271-4641b1365b8a/info"
       },
-      "identifier": "https://doi.org/10.XXXX/tuwrd.data.placeholder",
+      "identifier": "doi:10.70124/cqf3n-w4a63",
       "encodingFormat": "text/csv"
     },
     {
@@ -121,7 +123,7 @@
       "@type": "SoftwareSourceCode",
       "name": "Unemployment Prediction Notebook",
       "description": "Jupyter Notebook containing the ML pipeline for predicting unemployment.",
-      "identifier": "https://doi.org/10.XXXX/zenodo.software.placeholder",
+      "identifier": "doi:10.5281/zenodo.20395175",
       "programmingLanguage": {
         "@id": "#python"
       }
@@ -191,7 +193,7 @@
       "@type": "File",
       "name": "Random Forest Model v1.0",
       "description": "Trained Random Forest model for predicting unemployment.",
-      "identifier": "https://doi.org/10.XXXX/tuwrd.model.placeholder",
+      "identifier": "doi:10.70124/464th-2za78",
       "encodingFormat": "application/octet-stream",
       "subjectOf": { "@id": "outputs/metadata/fair4ml_random_forest_v1.0.json" }
     },
@@ -201,6 +203,14 @@
       "name": "FAIR4ML Metadata - Random Forest v1.0",
       "description": "FAIR4ML-compliant metadata for the trained Random Forest regression model.",
       "encodingFormat": "application/ld+json",
+      "about": { "@id": "outputs/models/model_random_forest_v1.0.pkl" }
+    },
+    {
+      "@id": "docs/model-card.md",
+      "@type": "CreativeWork",
+      "name": "Model Card for Random Forest Model",
+      "description": "Markdown document describing the intended use, training data, evaluation results, and limitations of the model.",
+      "encodingFormat": "text/markdown",
       "about": { "@id": "outputs/models/model_random_forest_v1.0.pkl" }
     }
   ]
