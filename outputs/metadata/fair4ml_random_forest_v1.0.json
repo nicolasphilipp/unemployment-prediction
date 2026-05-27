@@ -10,7 +10,7 @@
   "description": "Random Forest regression pipeline (StandardScaler + RandomForestRegressor) trained to predict the average annual number of unemployed persons (age 15-64) in Vienna districts using guest overnight stays and average population as predictors, with one-hot-encoded district codes as additional features. Hyperparameters selected by exhaustive grid search (36 combinations) on the validation set. Best-performing model of the experiment; serialized as model_random_forest_v1.0.pkl.",
   "version": "1.0",
   "dateCreated": "2026-05-24",
-  "license": "https://spdx.org/licenses/MIT",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
   "keywords": [
     "unemployment prediction",
     "random forest",
@@ -55,7 +55,6 @@
     "pandas==2.3.3",
     "joblib==1.5.2"
   ],
-  "description": "Hyperparameters (selected by grid search on validation RMSE): n_estimators=200, max_depth=None (fully grown trees), min_samples_split=2, random_state=42, n_jobs=-1. Search space: n_estimators in [100,200,300], max_depth in [3,5,10,None], min_samples_split in [2,5,10] (36 combinations). Final model retrained on combined train+validation data (391 rows, 2002-2018) after selection.",
   "fair4ml:trainedOn": {
     "@type": "Dataset",
     "@id": "https://doi.org/10.82556/yqxx-kf04",
@@ -139,7 +138,7 @@
   },
   "fair4ml:intendedUse": "Prediction of district-level annual unemployment counts in Vienna. Intended for research and educational use. Can serve as a baseline for more complex socio-economic forecasting pipelines. Not intended for deployment in policy or administrative decision-making without further validation.",
   "fair4ml:modelRisksBiasLimitations": "Only two numeric predictors (tourism overnight stays and average population) are used; socio-economic factors such as industry composition, education levels, wage levels, or housing costs are excluded. COVID years 2020-2021 are excluded; the model has not been validated on pandemic-period data. High-unemployment districts (UEP_VALUE > ~5,000) are predicted with lower accuracy. No cross-validation was performed - a single chronological split is used. One-hot encoding of district codes makes the model non-transferable to new or renamed districts without retraining. serialized with scikit-learn 1.7.2; loading with a different version may produce unexpected behaviour.",
-  "fair4ml:legal": "Training data sourced from Austrian Open Government Data under CC BY 4.0. Model artefact released under MIT License.",
+  "fair4ml:legal": "Training data sourced from Austrian Open Government Data under CC BY 4.0. Model artefact released under CC BY 4.0. Source code is licensed separately under the MIT License.",
   "fair4ml:ethicalSocial": "The model predicts unemployment, a sensitive socio-economic indicator. Predictions should not be used to label or rank districts in public-facing applications without appropriate contextualisation. The model captures correlation between tourism and unemployment and does not imply causation.",
   "fair4ml:usageInstructions": "Load the trained pipeline with joblib.load('outputs/models/model_random_forest_v1.0.pkl'). Prepare input features: TOU_VALUE (int), POP_AVE (int), DISTRICT_CODE one-hot encoded using the same OneHotEncoder fitted during training (23 binary columns). Call model.predict(X) to obtain UEP_VALUE predictions.",
   "fair4ml:codeSampleSnippet": "import joblib\nmodel = joblib.load('outputs/models/model_random_forest_v1.0.pkl')\ny_pred = model.predict(X_test)  # X_test: [TOU_VALUE, POP_AVE, DISTRICT_90100, ..., DISTRICT_92300]",
@@ -149,5 +148,10 @@
     "encodingFormat": "application/octet-stream",
     "description": "serialized scikit-learn Pipeline (StandardScaler + RandomForestRegressor) stored with joblib 1.5.2."
   },
-  "codemeta:readme": "https://github.com/nicolasphilipp/unemployment-prediction/blob/main/README.md"
+  "codemeta:readme": "https://github.com/nicolasphilipp/unemployment-prediction/blob/main/README.md",
+  "subjectOf": {
+    "@type": "CreativeWork",
+    "name": "Model Card",
+    "url": "https://github.com/nicolasphilipp/unemployment-prediction/blob/main/docs/model-card.md"
+  }
 }
